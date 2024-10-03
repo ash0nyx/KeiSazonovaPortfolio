@@ -1,3 +1,4 @@
+<script>
 window.addEventListener('mouseover', initLandbot, { once: true });
 window.addEventListener('touchstart', initLandbot, { once: true });
 var myLandbot;
@@ -14,3 +15,4 @@ function initLandbot() {
     x.parentNode.insertBefore(s, x);
   }
 }
+</script>
