@@ -101,112 +101,233 @@
 								<li class="icon solid fa-phone">(+33) 0670074224</li>
 								<li class="icon solid fa-envelope"><a href="#">keisazonova@gmail.com</a></li>
 							</ul>
-						</div>
-						import { useState } from 'react';
-import { Mail, Linkedin, Facebook, Twitter, Medium, Pinterest } from 'lucide-react';
+				<!-- Claude test start-->
 
-export default function SubscriptionForm() {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: ''
-  });
-  const [message, setMessage] = useState('');
+						<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!formData.firstName || !formData.lastName || !formData.email) {
-      setMessage('Please fill in all fields');
-      return;
-    }
-    if (!formData.email.includes('@')) {
-      setMessage('Please enter a valid email address');
-      return;
-    }
-    setMessage('Thanks for subscribing!');
-    // Reset form
-    setFormData({ firstName: '', lastName: '', email: '' });
-  };
+        body {
+            min-height: 100vh;
+            background-color: #333;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
+        }
 
-  return (
-    <div className="min-h-screen bg-gray-800 flex flex-col items-center justify-center p-4">
-      <div className="max-w-2xl w-full text-center">
-        <h1 className="text-4xl font-bold text-white mb-4">SUBSCRIBE</h1>
-        <p className="text-white mb-8">Sign up with your email address to receive new content.</p>
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
 
-        <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4 mb-4">
-          <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            placeholder="First Name"
-            className="flex-1 p-3 rounded"
-          />
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            placeholder="Last Name"
-            className="flex-1 p-3 rounded"
-          />
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Email Address"
-            className="flex-1 p-3 rounded"
-          />
-          <button
-            type="submit"
-            className="bg-gray-700 text-white px-6 py-3 rounded hover:bg-gray-600 transition-colors"
-          >
-            SIGN UP
-          </button>
+        .subtitle {
+            margin-bottom: 2rem;
+        }
+
+        .form {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .form {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        input {
+            padding: 0.75rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 0.75rem 2rem;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .privacy {
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .social-icon:hover {
+            background-color: #eee;
+        }
+
+        .social-icon img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .contact {
+            color: #ccc;
+            font-size: 0.875rem;
+        }
+
+        .contact a {
+            color: inherit;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+
+        .contact a:hover {
+            color: white;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .message.error {
+            background-color: rgba(255, 0, 0, 0.1);
+            color: #ff4444;
+        }
+
+        .message.success {
+            background-color: rgba(0, 255, 0, 0.1);
+            color: #44ff44;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SUBSCRIBE</h1>
+        <p class="subtitle">Sign up with your email address to receive new content.</p>
+
+        <form class="form" id="subscribeForm">
+            <input type="text" id="firstName" placeholder="First Name" required>
+            <input type="text" id="lastName" placeholder="Last Name" required>
+            <input type="email" id="email" placeholder="Email Address" required>
+            <button type="submit">SIGN UP</button>
         </form>
 
-        {message && (
-          <p className="text-white mb-4">{message}</p>
-        )}
+        <div id="messageContainer"></div>
 
-        <p className="text-white text-sm mb-8">We respect your privacy.</p>
+        <p class="privacy">We respect your privacy.</p>
 
-        <div className="flex justify-center gap-4">
-          <SocialIcon icon={<Linkedin />} href="#" />
-          <SocialIcon icon={<Facebook />} href="#" />
-          <SocialIcon icon={<Twitter />} href="#" />
-          <SocialIcon icon={<Medium />} href="#" />
-          <SocialIcon icon={<Pinterest />} href="#" />
-          <SocialIcon icon={<Mail />} href="#" />
+        <div class="social-links">
+            <a href="#" class="social-icon">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z'%3E%3C/path%3E%3Cpath d='M2 9h4v12H2z'%3E%3C/path%3E%3Ccircle cx='4' cy='4' r='2'%3E%3C/circle%3E%3C/svg%3E" alt="LinkedIn">
+            </a>
+            <a href="#" class="social-icon">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z'%3E%3C/path%3E%3C/svg%3E" alt="Facebook">
+            </a>
+            <a href="#" class="social-icon">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z'%3E%3C/path%3E%3C/svg%3E" alt="Twitter">
+            </a>
+            <a href="#" class="social-icon">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 4c4.411 0 8 3.589 8 8s-3.589 8-8 8-8-3.589-8-8 3.589-8 8-8zm0 2c-3.309 0-6 2.691-6 6s2.691 6 6 6 6-2.691 6-6-2.691-6-6-6zm0 2c2.206 0 4 1.794 4 4s-1.794 4-4 4-4-1.794-4-4 1.794-4 4-4z'/%3E%3C/svg%3E" alt="Medium">
+            </a>
+            <a href="#" class="social-icon">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm3.03 15.92c-.18.66-.69 1.2-1.34 1.43-1.23.44-6.15 1.42-7.82-3.87C4.8 12.6 6.22 8.9 9.13 8c1.87-.59 3.5.32 4.3 1.65.63 1.06.76 2.27.76 3.3h-5.38c-.04 2.2.86 3.67 2.65 3.67.9 0 1.75-.44 2.35-1.14z'/%3E%3C/svg%3E" alt="Pinterest">
+            </a>
+            <a href="#" class="social-icon">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'%3E%3C/path%3E%3Cpolyline points='22,6 12,13 2,6'%3E%3C/polyline%3E%3C/svg%3E" alt="Email">
+            </a>
         </div>
 
-        <div className="mt-12 text-gray-300 text-sm space-x-4">
-          <a href="tel:+15852868783" className="hover:text-white">(585) 286-8783</a>
-          <a href="mailto:khanhle.1013@gmail.com" className="hover:text-white">KHANHLE.1013@GMAIL.COM</a>
+        <div class="contact">
+            <a href="tel:+15852868783">(585) 286-8783</a>
+            <a href="mailto:khanhle.1013@gmail.com">KHANHLE.1013@GMAIL.COM</a>
         </div>
-      </div>
     </div>
-  );
-}
 
-const SocialIcon = ({ icon, href }) => (
-  <a
-    href={href}
-    className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors"
-  >
-    {icon}
-  </a>
-);
+    <script>
+        document.getElementById('subscribeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const messageContainer = document.getElementById('messageContainer');
+
+            // Basic validation
+            if (!firstName || !lastName || !email) {
+                showMessage('Please fill in all fields', 'error');
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                showMessage('Please enter a valid email address', 'error');
+                return;
+            }
+
+            // Simulating form submission
+            showMessage('Thanks for subscribing!', 'success');
+            this.reset();
+        });
+
+        function showMessage(text, type) {
+            const messageContainer = document.getElementById('messageContainer');
+            messageContainer.innerHTML = `<div class="message ${type}">${text}</div>`;
+            
+            // Clear message after 3 seconds
+            setTimeout(() => {
+                messageContainer.innerHTML = '';
+            }, 3000);
+        }
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+    </script>
+</body>
+</html>	
+
+
+				<!-- Claude test end-->
+							
 					</section>
 
 			</div>
